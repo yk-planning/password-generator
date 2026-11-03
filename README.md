@@ -11,6 +11,7 @@
 - 紛らわしい文字（`0 O o 1 l I |`）の除外
 - エントロピー（ビット数）による強度表示
 - ワンクリックでコピー
+- 日本語・英語に対応
 
 パスワードは `crypto.getRandomValues()` を使ってブラウザ内で生成され、外部に送信されることはありません。
 
@@ -18,15 +19,29 @@
 
 `index.html` をブラウザで開くだけで動作します。
 
+## ページ構成
+
+| パス | 内容 |
+| --- | --- |
+| `index.html` | 日本語版（https://password.yk-planning.jp/） |
+| `en/index.html` | 英語版（https://password.yk-planning.jp/en/） |
+| `app.js` | 生成ロジック（`<html lang>` で日本語・英語の文言を切り替え） |
+| `style.css` | 両ページ共通のデザイン（ビルドで各ページに埋め込む） |
+
+## ビルド
+
+`style.css`・各ページ・`app.js` を変更したら、次のコマンドを実行してからコミットしてください。
+
+```
+node scripts/build.mjs
+```
+
+- `style.css` を各ページの `<style id="site-css">` に埋め込みます（表示速度のため）。
+- ページ内で使っている文字だけを含むフォント（`fonts/`）を作り直します。
+
 ## フォントについて
 
 見出しや本文には [M PLUS Rounded 1c](https://fonts.google.com/specimen/M+PLUS+Rounded+1c)（SIL Open Font License 1.1、`fonts/OFL.txt`）を使用しています。
-表示速度のため、ページ内で使っている文字だけを含むサブセットを `fonts/` に置いています。
-`index.html` や `app.js` の文言を変更したときは、次のコマンドでフォントを作り直してください。
-
-```
-node scripts/subset-font.mjs
-```
 
 ## デプロイ
 

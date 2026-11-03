@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Password Generator | Create 8 Strong Random Passwords for Free</title>
+  <meta name="description" content="Free, secure random password generator that creates 8 strong passwords at once. Choose a length from 4 to 128 characters and a strength level (Low, Medium, High, Maximum). Pick uppercase, lowercase, numbers and symbols, or exclude look-alike characters. Passwords are generated in your browser and never sent anywhere.">
+  <meta name="theme-color" content="#bfe6fa">
+  <meta name="color-scheme" content="light">
+  <link rel="canonical" href="https://password.yk-planning.jp/en/">
+  <link rel="alternate" hreflang="ja" href="https://password.yk-planning.jp/">
+  <link rel="alternate" hreflang="en" href="https://password.yk-planning.jp/en/">
+  <link rel="alternate" hreflang="x-default" href="https://password.yk-planning.jp/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://password.yk-planning.jp/en/">
+  <meta property="og:site_name" content="Password Generator | YK Planning">
+  <meta property="og:title" content="Password Generator | Create 8 Strong Random Passwords for Free">
+  <meta property="og:description" content="Pick a length and strength to instantly get 8 secure passwords. Everything runs in your browser — nothing is sent or stored.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ja_JP">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/mplus-rounded-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/mplus-rounded-700.woff2" as="font" type="font/woff2" crossorigin>
+  <style id="site-css">
+    @font-face {
+      font-family: "M PLUS Rounded 1c";
+      font-weight: 400;
+      font-display: optional;
+      src: url("/fonts/mplus-rounded-400.woff2") format("woff2");
+    }
+
+    @font-face {
+      font-family: "M PLUS Rounded 1c";
+      font-weight: 700;
+      font-display: optional;
+      src: url("/fonts/mplus-rounded-700.woff2") format("woff2");
+    }
+
+    :root {
+      --bg: #e6f5fd;
+      --bg-accent: #fdf3f6;
+      --card: #ffffff;
+      --text: #3d5878;
+      --heading: #2f6f9f;
+      --muted: #55708c;
+      --border: #cfe8f7;
+      --accent: #6cc3ee;
+      --accent-strong: #1b6c9c;
+      --accent-hover: #93d3f3;
+      --accent-text: #1f4a6e;
+      --pink: #f6b9cb;
+      --pink-soft: #fdeef3;
+      --cream: #fffbf2;
+      --input-bg: #f6fbff;
+      /* OS がダークモードでもパステル配色を維持する */
+      color-scheme: light;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg) 60%, var(--bg-accent) 100%);
+      color: var(--text);
+      font-family: "M PLUS Rounded 1c", system-ui, "Hiragino Maru Gothic ProN", "Hiragino Sans", "Noto Sans JP", sans-serif;
+      line-height: 1.7;
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .site-header {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 16px 24px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      color: var(--heading);
+      margin: 0 0 12px;
+      letter-spacing: 0.04em;
+    }
+
+    .lead { margin: 0; }
+
+    .lang-switch {
+      margin: 0 0 12px;
+      text-align: right;
+      font-size: 0.9rem;
+    }
+
+    .lang-switch a { color: var(--accent-strong); font-weight: 700; }
+    .lead strong { color: var(--accent-strong); }
+
+    h2 {
+      font-size: 1.25rem;
+      color: var(--heading);
+      margin: 0 0 12px;
+      padding-left: 12px;
+      border-left: 5px solid var(--accent);
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      color: var(--heading);
+      margin: 0;
+    }
+
+    .card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 6px 20px rgba(108, 195, 238, 0.15);
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      background: var(--card);
+      color: var(--text);
+      transition: background-color 0.15s, border-color 0.15s;
+    }
+
+    button:hover { border-color: var(--accent); background: var(--input-bg); }
+
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-text);
+      font-weight: 700;
+    }
+
+    button.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+    .field { margin-bottom: 20px; }
+
+    .field-title {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .field-title strong { color: var(--accent-strong); font-size: 1.2em; }
+
+    .length-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    #length { flex: 1; accent-color: var(--accent); }
+
+    #length-number {
+      width: 80px;
+      padding: 6px 10px;
+      font: inherit;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: var(--input-bg);
+      color: var(--text);
+    }
+
+    .length-presets {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .length-presets button {
+      padding: 4px 0;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .length-presets button[aria-pressed="true"] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-text);
+    }
+
+    @media (max-width: 520px) {
+      .length-presets { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .levels {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .levels label { position: relative; }
+    .levels input { position: absolute; opacity: 0; }
+
+    .levels span {
+      display: block;
+      text-align: center;
+      padding: 8px 0;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .levels input:checked + span {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-text);
+    }
+
+    .levels input:focus-visible + span { outline: 3px solid var(--pink); outline-offset: 2px; }
+
+    /* 強度の説明ボックス */
+    .strength-box {
+      --level-color: var(--accent);
+      background: var(--cream);
+      border: 2px solid var(--level-color);
+      border-radius: 20px;
+      padding: 18px 20px;
+      margin-bottom: 20px;
+    }
+
+    .strength-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .strength-level {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--heading);
+    }
+
+    .strength-badge {
+      padding: 2px 14px;
+      border-radius: 999px;
+      background: var(--level-color);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .strength-desc {
+      margin: 8px 0 12px;
+      font-size: 1rem;
+    }
+
+    .meter-bar {
+      height: 10px;
+      border-radius: 999px;
+      background: var(--border);
+      overflow: hidden;
+    }
+
+    #meter-fill {
+      height: 100%;
+      width: 0;
+      border-radius: 999px;
+      background: var(--level-color);
+      transition: width 0.25s;
+    }
+
+    .strength-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 14px 0 0;
+    }
+
+    .strength-stats div {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 8px 10px;
+    }
+
+    .strength-stats dt {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .strength-stats dd {
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .advanced summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--heading);
+    }
+
+    .options {
+      display: grid;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .options input { accent-color: var(--accent); }
+
+    /* 生成結果 */
+    .results-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 8px 0 12px;
+      flex-wrap: wrap;
+    }
+
+    .results {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+      min-height: 440px;
+      align-content: start;
+    }
+
+    .results li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 8px 8px 14px;
+      background: var(--input-bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .results li:nth-child(even) { background: var(--pink-soft); }
+
+    .results code {
+      flex: 1;
+      min-width: 0;
+      font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+      font-size: 1rem;
+      overflow-wrap: anywhere;
+      user-select: all;
+    }
+
+    .results button { flex-shrink: 0; font-size: 0.9rem; }
+    .results button.copied { background: var(--pink); border-color: var(--pink); color: var(--accent-text); }
+
+    .note {
+      margin: 16px 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* 解説コンテンツ */
+    .content ol, .content ul { padding-left: 1.4em; margin: 0 0 12px; }
+    .content li { margin-bottom: 6px; }
+    .content p { margin: 0 0 12px; }
+    .content p:last-child { margin-bottom: 0; }
+    .small { font-size: 0.8rem; color: var(--muted); }
+
+    .table-wrap { overflow-x: auto; margin-bottom: 12px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    thead th {
+      background: var(--input-bg);
+      color: var(--heading);
+    }
+
+    tbody th { white-space: nowrap; color: var(--heading); }
+    tr.recommended { background: var(--pink-soft); }
+
+    .sources {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: var(--input-bg);
+      border-radius: 16px;
+      font-size: 0.85rem;
+    }
+
+    .sources h3 { font-size: 0.9rem; margin-bottom: 4px; }
+    .sources ul { margin: 0; }
+    .sources li { margin-bottom: 2px; }
+    .content a { color: var(--accent-strong); }
+
+    /* 画面外の解説セクションはスクロールされるまでレイアウトを省略する */
+    .content {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 500px;
+    }
+
+    .faq details {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+    }
+
+    .faq summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .faq details p { margin: 8px 0 0; }
+
+    .site-footer {
+      text-align: center;
+      padding: 24px 16px 40px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .site-footer p { margin: 4px 0; }
+
+    .site-footer a {
+      color: var(--accent-strong);
+      font-weight: 700;
+    }
+
+    .copyright { font-size: 0.8rem; }
+
+    @media (max-width: 520px) {
+      .card { padding: 18px 16px; }
+      .strength-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Password Generator",
+    "url": "https://password.yk-planning.jp/en/",
+    "publisher": { "@type": "Organization", "name": "YK Planning", "url": "https://yk-planning.jp/" },
+    "description": "A free web tool that generates 8 secure random passwords at once, with adjustable length and strength.",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "All",
+    "inLanguage": "en",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Are generated passwords stored or sent anywhere?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Passwords are generated entirely in your browser and are never sent to or stored on any server." }
+      },
+      {
+        "@type": "Question",
+        "name": "How long should my password be?",
+        "acceptedAnswer": { "@type": "Answer", "text": "For most online services, use at least 16 characters including uppercase, lowercase, numbers and symbols. For critical accounts such as banking or admin access, 20 or more characters is recommended." }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I change my passwords regularly?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No, periodic changes are not necessary. NIST (U.S. National Institute of Standards and Technology) and Japan's Ministry of Internal Affairs and Communications both advise against forced periodic changes. Use a strong, unique password for each service and change it immediately if there is evidence it has been leaked." }
+      },
+      {
+        "@type": "Question",
+        "name": "How secure is the random number generator?",
+        "acceptedAnswer": { "@type": "Answer", "text": "It uses the browser's built-in cryptographically secure random number generator (crypto.getRandomValues from the Web Crypto API)." }
+      },
+      {
+        "@type": "Question",
+        "name": "What if a service doesn't allow symbols?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Choose the Medium strength level, or uncheck Symbols in Advanced settings. Use a longer password to keep it strong." }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <p class="lang-switch"><a href="/" hreflang="ja" lang="ja">日本語</a></p>
+    <h1>Password Generator</h1>
+    <p class="lead">Create secure, hard-to-guess random passwords — <strong>8 at a time, for free</strong>. Just choose a length and strength, and your passwords are ready to use.</p>
+  </header>
+
+  <main>
+    <section class="card tool" aria-labelledby="tool-title">
+      <h2 id="tool-title" class="visually-hidden">Generate passwords</h2>
+
+      <div class="field">
+        <label for="length" class="field-title">Password length: <strong id="length-value">16</strong> characters</label>
+        <div class="length-row">
+          <input id="length" type="range" min="4" max="128" value="16">
+          <input id="length-number" type="number" min="4" max="128" value="16" aria-label="Password length (number)">
+        </div>
+        <div class="length-presets" role="group" aria-label="Common lengths">
+          <button type="button" data-length="8">8</button>
+          <button type="button" data-length="12">12</button>
+          <button type="button" data-length="16" aria-pressed="true">16</button>
+          <button type="button" data-length="20">20</button>
+          <button type="button" data-length="24">24</button>
+          <button type="button" data-length="32">32</button>
+          <button type="button" data-length="64">64</button>
+          <button type="button" data-length="128">128</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-title">Password strength</span>
+        <div class="levels" role="radiogroup" aria-label="Password strength">
+          <label><input type="radio" name="level" value="low"><span>Low</span></label>
+          <label><input type="radio" name="level" value="medium"><span>Medium</span></label>
+          <label><input type="radio" name="level" value="high" checked><span>High</span></label>
+          <label><input type="radio" name="level" value="max"><span>Max</span></label>
+        </div>
+      </div>
+
+      <!-- 初期表示（強度「High」・16文字）の内容を入れておき、JS 実行時のレイアウトシフトを防ぐ -->
+      <div id="strength-box" class="strength-box" aria-live="polite" style="--level-color: #1f7bb0">
+        <div class="strength-head">
+          <span id="strength-level" class="strength-level">Strength: High (recommended)</span>
+          <span id="strength-badge" class="strength-badge">Very strong</span>
+        </div>
+        <p id="strength-desc" class="strength-desc">Uses uppercase, lowercase, numbers and symbols. The best choice for email, social media, online shopping and most other services.</p>
+        <div class="meter-bar"><div id="meter-fill" style="width: 85%"></div></div>
+        <dl class="strength-stats">
+          <div><dt>Character pool</dt><dd id="stat-chars">90 characters</dd></div>
+          <div><dt>Entropy</dt><dd id="stat-bits">~104 bits</dd></div>
+          <div><dt>Estimated time to crack</dt><dd id="stat-time">Over 1 trillion years</dd></div>
+        </dl>
+      </div>
+
+      <details class="field advanced">
+        <summary>Advanced settings (character types)</summary>
+        <div class="options">
+          <label><input type="checkbox" id="opt-lower"> Lowercase (a-z)</label>
+          <label><input type="checkbox" id="opt-upper"> Uppercase (A-Z)</label>
+          <label><input type="checkbox" id="opt-digits"> Numbers (0-9)</label>
+          <label><input type="checkbox" id="opt-symbols"> Symbols (!@#$% etc.)</label>
+          <label><input type="checkbox" id="opt-ambiguous"> Exclude look-alike characters (0 O o 1 l I |)</label>
+        </div>
+      </details>
+
+      <div class="results-head">
+        <h3>Your passwords</h3>
+        <button id="generate" type="button" class="primary">↻ Regenerate all</button>
+      </div>
+      <ol id="results" class="results">
+        <li><code>&nbsp;</code><button type="button" disabled>Copy</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>Copy</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>Copy</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>Copy</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>Copy</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>Copy</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>Copy</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>Copy</button></li>
+      </ol>
+      <p class="note">Passwords are generated in your browser and are never sent or stored anywhere.</p>
+    </section>
+
+    <section class="card content">
+      <h2>How to use the password generator</h2>
+      <ol>
+        <li><strong>Choose a length</strong>: use the slider, the number box or a preset button to pick 4 to 128 characters.</li>
+        <li><strong>Choose a strength</strong>: select Low, Medium, High or Max to suit your purpose. If unsure, High is recommended.</li>
+        <li><strong>Copy and use</strong>: pick any of the 8 passwords and press "Copy" to copy it to your clipboard.</li>
+      </ol>
+      <p>If a service restricts which characters you can use (for example, no symbols), open "Advanced settings" to choose character types individually.</p>
+    </section>
+
+    <section class="card content">
+      <h2>Password strength guide</h2>
+      <p>A password's strength depends on the variety of characters and its length. The more character types and the longer the password, the harder it is to crack by brute force.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Strength</th><th>Characters</th><th>Suggested length</th><th>Best for</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>Low</th><td>Lowercase, numbers</td><td>8+</td><td>Temporary or low-importance accounts</td></tr>
+            <tr><th>Medium</th><td>Uppercase, lowercase, numbers</td><td>12+</td><td>Services that don't allow symbols</td></tr>
+            <tr class="recommended"><th>High</th><td>Uppercase, lowercase, numbers, symbols</td><td>16+</td><td>Email, social media, online shopping and most services</td></tr>
+            <tr><th>Max</th><td>Uppercase, lowercase, numbers, symbols</td><td>32+</td><td>Online banking, admin accounts, Wi-Fi and other critical uses</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small">* "Estimated time to crack" is an average assuming an attacker can make 10 billion guesses per second.</p>
+    </section>
+
+    <section class="card content">
+      <h2>Tips for creating and managing secure passwords</h2>
+      <ul>
+        <li><strong>Never reuse passwords</strong>: use a different password for every service. If one leaks, attackers will try it everywhere else.</li>
+        <li><strong>Make it long</strong>: adding length is the most effective way to increase strength.</li>
+        <li><strong>Avoid guessable information</strong>: don't use names, birthdays, phone numbers or dictionary words.</li>
+        <li><strong>Use a password manager</strong>: you won't need to remember complex passwords, and they stay safely stored.</li>
+        <li><strong>Turn on two-factor authentication</strong>: it helps block unauthorized logins even if your password leaks.</li>
+        <li><strong>No need to change passwords periodically</strong>: forcing regular changes used to be common advice, but it is no longer recommended. Forced changes push people toward simple passwords or small tweaks like changing the last digit, which actually lowers security. What matters is <strong>a long, hard-to-guess password that is unique to each service</strong>. However, change it immediately if there is evidence of a leak, such as a data breach at the service or a suspicious login.</li>
+      </ul>
+      <div class="sources">
+        <h3>Sources</h3>
+        <ul>
+          <li>NIST (U.S. National Institute of Standards and Technology), "<a href="https://pages.nist.gov/800-63-4/sp800-63b.html" target="_blank" rel="noopener">SP 800-63B Digital Identity Guidelines: Authentication and Authenticator Management</a>", 3.1.1.2 Password Verifiers</li>
+          <li>Ministry of Internal Affairs and Communications, Japan, "<a href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/security/business/staff/06/" target="_blank" rel="noopener" hreflang="ja">Setting and managing secure passwords</a>" (Japanese)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="card content faq">
+      <h2>Frequently asked questions</h2>
+      <details>
+        <summary>Are generated passwords stored or sent anywhere?</summary>
+        <p>No. Passwords are generated entirely in your browser and are never sent to or stored on any server.</p>
+      </details>
+      <details>
+        <summary>How long should my password be?</summary>
+        <p>For most online services, use at least 16 characters including uppercase, lowercase, numbers and symbols. For critical accounts such as banking or admin access, 20 or more characters is recommended.</p>
+      </details>
+      <details>
+        <summary>Should I change my passwords regularly?</summary>
+        <p>No, periodic changes are not necessary. NIST (U.S. National Institute of Standards and Technology) and Japan's Ministry of Internal Affairs and Communications both advise against forced periodic changes. Use a strong, unique password for each service and change it immediately if there is evidence it has been leaked.</p>
+      </details>
+      <details>
+        <summary>How secure is the random number generator?</summary>
+        <p>It uses the browser's built-in cryptographically secure random number generator (<code>crypto.getRandomValues</code> from the Web Crypto API).</p>
+      </details>
+      <details>
+        <summary>What if a service doesn't allow symbols?</summary>
+        <p>Choose the Medium strength level, or uncheck Symbols in Advanced settings. Use a longer password to keep it strong.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Operated by <a href="https://yk-planning.jp/" target="_blank" rel="noopener">YK Planning</a></p>
+    <p class="copyright">&copy; <span id="year">2026</span> YK Planning</p>
+  </footer>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>

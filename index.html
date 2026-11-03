@@ -9,29 +9,33 @@
   <meta name="theme-color" content="#bfe6fa">
   <meta name="color-scheme" content="light">
   <link rel="canonical" href="https://password.yk-planning.jp/">
+  <link rel="alternate" hreflang="ja" href="https://password.yk-planning.jp/">
+  <link rel="alternate" hreflang="en" href="https://password.yk-planning.jp/en/">
+  <link rel="alternate" hreflang="x-default" href="https://password.yk-planning.jp/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://password.yk-planning.jp/">
   <meta property="og:site_name" content="パスワードジェネレーター｜YKプランニング">
   <meta property="og:title" content="パスワードジェネレーター｜安全なランダムパスワードを無料で一括生成">
   <meta property="og:description" content="長さと強度を選ぶだけで、安全なパスワードを8個まとめて生成。ブラウザ内で完結し、外部に送信されません。">
   <meta property="og:locale" content="ja_JP">
+  <meta property="og:locale:alternate" content="en_US">
   <meta name="twitter:card" content="summary">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="fonts/mplus-rounded-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/mplus-rounded-700.woff2" as="font" type="font/woff2" crossorigin>
-  <style>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/mplus-rounded-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/mplus-rounded-700.woff2" as="font" type="font/woff2" crossorigin>
+  <style id="site-css">
     @font-face {
       font-family: "M PLUS Rounded 1c";
       font-weight: 400;
-      font-display: swap;
-      src: url("fonts/mplus-rounded-400.woff2") format("woff2");
+      font-display: optional;
+      src: url("/fonts/mplus-rounded-400.woff2") format("woff2");
     }
 
     @font-face {
       font-family: "M PLUS Rounded 1c";
       font-weight: 700;
-      font-display: swap;
-      src: url("fonts/mplus-rounded-700.woff2") format("woff2");
+      font-display: optional;
+      src: url("/fonts/mplus-rounded-700.woff2") format("woff2");
     }
 
     :root {
@@ -85,6 +89,14 @@
     }
 
     .lead { margin: 0; }
+
+    .lang-switch {
+      margin: 0 0 12px;
+      text-align: right;
+      font-size: 0.9rem;
+    }
+
+    .lang-switch a { color: var(--accent-strong); font-weight: 700; }
     .lead strong { color: var(--accent-strong); }
 
     h2 {
@@ -490,6 +502,7 @@
 </head>
 <body>
   <header class="site-header">
+    <p class="lang-switch"><a href="/en/" hreflang="en" lang="en">English</a></p>
     <h1>パスワードジェネレーター</h1>
     <p class="lead">安全で推測されにくいランダムパスワードを、<strong>無料で8個まとめて</strong>作成できます。長さと強度を選ぶだけで、すぐに使えるパスワードが生成されます。</p>
   </header>
@@ -507,7 +520,7 @@
         <div class="length-presets" role="group" aria-label="よく使う長さ">
           <button type="button" data-length="8">8</button>
           <button type="button" data-length="12">12</button>
-          <button type="button" data-length="16">16</button>
+          <button type="button" data-length="16" aria-pressed="true">16</button>
           <button type="button" data-length="20">20</button>
           <button type="button" data-length="24">24</button>
           <button type="button" data-length="32">32</button>
@@ -526,17 +539,18 @@
         </div>
       </div>
 
-      <div id="strength-box" class="strength-box" aria-live="polite">
+      <!-- 初期表示（強度「高」・16文字）の内容を入れておき、JS 実行時のレイアウトシフトを防ぐ -->
+      <div id="strength-box" class="strength-box" aria-live="polite" style="--level-color: #1f7bb0">
         <div class="strength-head">
-          <span id="strength-level" class="strength-level"></span>
-          <span id="strength-badge" class="strength-badge"></span>
+          <span id="strength-level" class="strength-level">強度：高（おすすめ）</span>
+          <span id="strength-badge" class="strength-badge">とても強い</span>
         </div>
-        <p id="strength-desc" class="strength-desc"></p>
-        <div class="meter-bar"><div id="meter-fill"></div></div>
+        <p id="strength-desc" class="strength-desc">大文字・小文字・数字・記号をすべて使った強力なパスワードです。メール・SNS・ネットショップなど一般的なサービスに最適です。</p>
+        <div class="meter-bar"><div id="meter-fill" style="width: 85%"></div></div>
         <dl class="strength-stats">
-          <div><dt>使用文字</dt><dd id="stat-chars"></dd></div>
-          <div><dt>エントロピー</dt><dd id="stat-bits"></dd></div>
-          <div><dt>解読にかかる時間の目安</dt><dd id="stat-time"></dd></div>
+          <div><dt>使用文字</dt><dd id="stat-chars">90種類</dd></div>
+          <div><dt>エントロピー</dt><dd id="stat-bits">約104ビット</dd></div>
+          <div><dt>解読にかかる時間の目安</dt><dd id="stat-time">1兆年以上</dd></div>
         </dl>
       </div>
 
@@ -555,7 +569,16 @@
         <h3>生成されたパスワード</h3>
         <button id="generate" type="button" class="primary">↻ すべて再生成</button>
       </div>
-      <ol id="results" class="results"></ol>
+      <ol id="results" class="results">
+        <li><code>&nbsp;</code><button type="button" disabled>コピー</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>コピー</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>コピー</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>コピー</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>コピー</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>コピー</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>コピー</button></li>
+        <li><code>&nbsp;</code><button type="button" disabled>コピー</button></li>
+      </ol>
       <p class="note">パスワードはお使いのブラウザ内で生成され、どこにも送信・保存されません。</p>
     </section>
 
@@ -637,6 +660,6 @@
     <p class="copyright">&copy; <span id="year">2026</span> YKプランニング</p>
   </footer>
 
-  <script src="app.js" defer></script>
+  <script src="/app.js" defer></script>
 </body>
 </html>
