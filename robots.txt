@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://password.yk-planning.jp/sitemap.xml
