@@ -45,7 +45,7 @@ node scripts/build.mjs
 
 ## デプロイ
 
-ビルド不要の静的サイトです。Cloudflare Pages などの静的ホスティングにそのまま配置できます。
+`main` に push すると、GitHub Actions（`.github/workflows/deploy.yml`）が Cloudflare Pages の `password-generator` プロジェクトへ自動でデプロイします（リポジトリの Secret `CLOUDFLARE_API_TOKEN` を使用）。
 `_headers` は Cloudflare Pages 用のキャッシュ・セキュリティヘッダー設定です。
 
 ## License

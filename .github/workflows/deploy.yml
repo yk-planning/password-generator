@@ -1,0 +1,32 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 公開するファイルだけを dist/ に集める（scripts/ や .github/ は公開しない）
+      - name: Collect public files
+        run: |
+          mkdir dist
+          cp -r index.html en app.js fonts favicon.svg robots.txt sitemap.xml _headers dist/
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: df73478b7c65d7996d842f66d91314e4
+          command: pages deploy dist --project-name=password-generator --branch=main
