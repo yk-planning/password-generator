@@ -1,0 +1,9 @@
+// Cloudflare Worker（静的アセット）の設定。GitHub Actions がビルドした dist/ を公開する。
+// カスタムドメイン（password.yk-planning.jp）とアクセス解析はダッシュボードで設定している。
+{
+  "name": "password-generator",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist"
+  }
+}

@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: Deploy to Cloudflare Workers
 
 on:
   push:
@@ -29,4 +29,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: df73478b7c65d7996d842f66d91314e4
-          command: pages deploy dist --project-name=password-generator --branch=main
+          wranglerVersion: "4.156.2"
+          command: deploy
