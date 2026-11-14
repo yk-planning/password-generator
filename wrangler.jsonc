@@ -1,9 +1,8 @@
-// Cloudflare Worker（静的アセット）の設定。GitHub Actions がビルドした dist/ を公開する。
+// Cloudflare Worker の設定。パスワードジェネレーターは https://yk-planning.jp/tools/password に移ったので、
+// このWorkerは password.yk-planning.jp へのアクセスをすべて新しいページへ 301 で転送するだけ（src/redirect.js）。
 // カスタムドメイン（password.yk-planning.jp）とアクセス解析はダッシュボードで設定している。
 {
   "name": "password-generator",
   "compatibility_date": "2026-11-01",
-  "assets": {
-    "directory": "./dist"
-  }
+  "main": "src/redirect.js"
 }

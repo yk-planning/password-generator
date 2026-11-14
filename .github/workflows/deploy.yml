@@ -18,12 +18,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 公開するファイルだけを dist/ に集める（scripts/ や .github/ は公開しない）
-      - name: Collect public files
-        run: |
-          mkdir dist
-          cp -r index.html en app.js fonts favicon.svg robots.txt sitemap.xml _headers dist/
-
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:

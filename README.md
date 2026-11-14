@@ -1,5 +1,9 @@
 # Password Generator
 
+> **移転しました**：パスワードジェネレーターは、ＹＫプランニングのHP（https://yk-planning.jp/tools/password ・リポジトリ yk-planning/yk-web）に移りました。
+> 今このリポジトリが公開しているのは、password.yk-planning.jp へのアクセスを新しいページへ 301 で転送する Worker（`src/redirect.js`）だけです。
+> 検索結果が新しいURLに切り替わったら、Worker とサブドメインを削除する予定です。下の内容は移転前の記録です（英語版 /en/ は移転先にはありません）。
+
 ブラウザ内で動作するシンプルなパスワードジェネレーターです。
 
 ## 機能
@@ -45,7 +49,7 @@ node scripts/build.mjs
 
 ## デプロイ
 
-`main` に push すると、GitHub Actions（`.github/workflows/deploy.yml`）が Cloudflare Workers の `password-generator`（静的アセット、設定は `wrangler.jsonc`）へ自動でデプロイします（リポジトリの Secret `CLOUDFLARE_API_TOKEN` を使用）。
+`main` に push すると、GitHub Actions（`.github/workflows/deploy.yml`）が Cloudflare Workers の `password-generator` へ自動でデプロイします（リポジトリの Secret `CLOUDFLARE_API_TOKEN` を使用）。今は転送用の Worker（`src/redirect.js`、設定は `wrangler.jsonc`）だけを公開しています。
 `_headers` は Cloudflare Pages 用のキャッシュ・セキュリティヘッダー設定です。
 
 ## License
